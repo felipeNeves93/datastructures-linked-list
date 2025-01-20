@@ -21,5 +21,19 @@
       the pointers.
     * Dynamic memory allocation
 * **Disavantages**
-  * Higher memory usage because of the utilization of pointers
-  * Sequential access, not allowing the access of a direct element
+    * Higher memory usage because of the utilization of pointers
+    * Sequential access, not allowing the access of a direct element
+* **Implementations**
+  * _Links_
+      * [Singly](https://github.com/felipeNeves93/datastructures-linked-list/blob/master/src/main/java/com/linkedlistdatastructure/implementation/singly/SinglyLinkedList.java)
+      * [Doubly](https://github.com/felipeNeves93/datastructures-linked-list/blob/master/src/main/java/com/linkedlistdatastructure/implementation/doubly/DoublyLinkedList.java)
+      * [Circular](https://github.com/felipeNeves93/datastructures-linked-list/blob/master/src/main/java/com/linkedlistdatastructure/implementation/circular/CircularLinkedList.java)
+  * **Details**
+    * In the implementation folder i added all the implementations regarding the different types of linked lists.
+    * I created a interface called _LinkedListDataStructure_ that will contain all the main operations
+      from linked lists
+    * Each type of linked list will implement this interface
+    * The _Node_ class will be used in all implementations as well.
+    * There are tests for each linked list type in the _src/test/java/implementation_ with the common
+      operations
+      implemented.
