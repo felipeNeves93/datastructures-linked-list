@@ -1,20 +1,19 @@
 package com.linkedlistdatastructure.implementation.singly;
 
-import com.linkedlistdatastructure.implementation.LinkedListDataStructure;
+import com.linkedlistdatastructure.implementation.LinkedListOperations;
+import com.linkedlistdatastructure.implementation.LinkedListStructure;
 import com.linkedlistdatastructure.implementation.Node;
 
-public class SinglyLinkedList implements LinkedListDataStructure {
-
-  private Node node;
+public class SinglyLinkedList extends LinkedListStructure implements LinkedListOperations {
 
   @Override
   public Node addAtTheEnd(int value) {
     System.out.println("Adding at the end of the list: " + value);
-    var currentNode = this.node;
+    var currentNode = this.head;
 
     if (currentNode == null) {
-      this.node = new Node(value);
-      return this.node;
+      this.head = new Node(value);
+      return this.head;
     }
 
     while (currentNode.getNext() != null) {
@@ -31,17 +30,17 @@ public class SinglyLinkedList implements LinkedListDataStructure {
   public Node addAtTheBeginning(int value) {
     System.out.println("Adding at the beginning of the list: " + value);
 
-    if (this.node == null) {
-      this.node = new Node(value);
-      return node;
+    if (this.head == null) {
+      this.head = new Node(value);
+      return this.head;
     }
 
     var nodeToAdd = new Node(value);
-    nodeToAdd.setNext(this.node);
+    nodeToAdd.setNext(this.head);
 
-    this.node = nodeToAdd;
+    this.head = nodeToAdd;
 
-    return this.node;
+    return this.head;
   }
 
   @Override
@@ -64,8 +63,8 @@ public class SinglyLinkedList implements LinkedListDataStructure {
     var currentPosition = 0;
 
     var newNode = new Node(value);
-    var currentNode = this.node;
-    var previousNode = this.node;
+    var currentNode = this.head;
+    var previousNode = this.head;
 
     while (currentPosition < position) {
       previousNode = currentNode;
@@ -83,15 +82,15 @@ public class SinglyLinkedList implements LinkedListDataStructure {
   public Node deleteByValue(int value) {
     if (length() > 0) {
       // if it is the head node
-      if (this.node.getValue() == value) {
-        var deletedNode = this.node;
+      if (this.head.getValue() == value) {
+        var deletedNode = this.head;
 
-        this.node = this.node.getNext();
+        this.head = this.head.getNext();
         return deletedNode;
       }
 
-      var currentNode = this.node;
-      var previousNode = this.node;
+      var currentNode = this.head;
+      var previousNode = this.head;
 
       while (currentNode != null) {
         if (currentNode.getValue() == value) {
@@ -122,15 +121,15 @@ public class SinglyLinkedList implements LinkedListDataStructure {
     }
 
     if (index == 0) {
-      var deletedNode = this.node;
-      this.node = this.node.getNext();
+      var deletedNode = this.head;
+      this.head = this.head.getNext();
 
       System.out.println("Deleting the value: " + deletedNode.getValue() + " at index " + index);
       return deletedNode;
     }
 
-    var currentNode = this.node;
-    var previousNode = this.node;
+    var currentNode = this.head;
+    var previousNode = this.head;
     var currentIndex = 0;
 
     while (currentIndex != index) {
@@ -148,7 +147,7 @@ public class SinglyLinkedList implements LinkedListDataStructure {
   @Override
   public Node search(int value) {
     if (length() > 0) {
-      var currentNode = this.node;
+      var currentNode = this.head;
 
       while (currentNode != null) {
         if (currentNode.getValue() == value) {
@@ -168,7 +167,7 @@ public class SinglyLinkedList implements LinkedListDataStructure {
 
   @Override
   public void printList() {
-    var currentNode = this.node;
+    var currentNode = this.head;
 
     if (currentNode == null) {
       System.out.println("Empty List!");
@@ -187,7 +186,7 @@ public class SinglyLinkedList implements LinkedListDataStructure {
   @Override
   public int length() {
     var length = 0;
-    var currentNode = this.node;
+    var currentNode = this.head;
 
     while (currentNode != null) {
       currentNode = currentNode.getNext();

@@ -1,6 +1,6 @@
 package com.linkedlistdatastructure.implementation;
 
-public interface LinkedListDataStructure {
+public interface LinkedListOperations {
 
 
   Node addAtTheEnd(int value);
