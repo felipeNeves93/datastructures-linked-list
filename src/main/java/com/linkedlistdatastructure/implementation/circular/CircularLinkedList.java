@@ -1,10 +1,10 @@
-package com.linkedlistdatastructure.implementation.doubly;
+package com.linkedlistdatastructure.implementation.circular;
 
 import com.linkedlistdatastructure.implementation.LinkedListOperations;
 import com.linkedlistdatastructure.implementation.LinkedListStructure;
 import com.linkedlistdatastructure.implementation.Node;
 
-public class DoublyLinkedList extends LinkedListStructure implements LinkedListOperations {
+public class CircularLinkedList extends LinkedListStructure implements LinkedListOperations {
 
   @Override
   public Node addAtTheEnd(int value) {
@@ -14,6 +14,9 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
       this.head = nodeToAdd;
       this.tail = nodeToAdd;
 
+      this.head.setNext(this.tail);
+      this.head.setPrevious(this.tail);
+
       printList();
 
       return nodeToAdd;
@@ -21,12 +24,15 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
 
     var currentNode = this.head;
 
-    while (currentNode.getNext() != null) {
+    while (!currentNode.getNext().equals(this.head)) {
       currentNode = currentNode.getNext();
     }
 
-    nodeToAdd.setPrevious(currentNode);
     currentNode.setNext(nodeToAdd);
+    nodeToAdd.setPrevious(currentNode);
+    this.head.setPrevious(nodeToAdd);
+    nodeToAdd.setNext(this.head);
+
     this.tail = nodeToAdd;
 
     printList();
@@ -41,6 +47,9 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
       this.head = nodeToAdd;
       this.tail = nodeToAdd;
 
+      this.head.setNext(this.tail);
+      this.head.setPrevious(this.tail);
+
       this.printList();
       return nodeToAdd;
     }
@@ -48,6 +57,9 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
     var currentNode = this.head;
     currentNode.setPrevious(nodeToAdd);
     nodeToAdd.setNext(currentNode);
+
+    nodeToAdd.setPrevious(this.tail);
+    this.tail.setNext(nodeToAdd);
 
     this.head = nodeToAdd;
     printList();
@@ -107,7 +119,7 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
     System.out.println("Deleting value: " + value + " from the list");
     var currentNode = this.head;
 
-    while (currentNode != null) {
+    while (currentNode.getNext() != null) {
       if (currentNode.getValue() == value) {
         if (listLength == 1) {
           this.head = null;
@@ -121,8 +133,10 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
         var previousNode = currentNode.getPrevious();
 
         // Means that it is the tail
-        if (nextNode == null) {
+        if (currentNode.getNext().equals(this.head)) {
           previousNode.setNext(currentNode.getNext());
+
+          this.head.setPrevious(previousNode);
           this.tail = previousNode;
 
           printList();
@@ -130,8 +144,10 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
         }
 
         // Means that it is the head
-        if (previousNode == null) {
+        if (currentNode.getPrevious().equals(this.tail)) {
           nextNode.setPrevious(currentNode.getPrevious());
+          previousNode.setNext(nextNode);
+
           this.head = nextNode;
 
           printList();
@@ -143,10 +159,13 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
 
         printList();
         return currentNode;
-
       }
 
       currentNode = currentNode.getNext();
+      if (currentNode.equals(this.head)) {
+        break;
+
+      }
     }
 
     System.out.println("Value " + value + " not found on the list!");
@@ -187,8 +206,10 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
         var previousNode = currentNode.getPrevious();
 
         // Means that it is the tail
-        if (nextNode == null) {
+        if (currentNode.getNext().equals(this.head)) {
           previousNode.setNext(currentNode.getNext());
+
+          this.head.setPrevious(previousNode);
           this.tail = previousNode;
 
           printList();
@@ -196,8 +217,10 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
         }
 
         // Means that it is the head
-        if (previousNode == null) {
+        if (currentNode.getPrevious().equals(this.tail)) {
           nextNode.setPrevious(currentNode.getPrevious());
+          previousNode.setNext(nextNode);
+
           this.head = nextNode;
 
           printList();
@@ -222,11 +245,14 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
   public Node search(int value) {
     var currentNode = this.head;
 
-    while (currentNode != null) {
+    while (currentNode.getNext() != null) {
       if (currentNode.getValue() == value) {
         return currentNode;
       }
       currentNode = currentNode.getNext();
+      if (currentNode.getNext().equals(this.head)) {
+        break;
+      }
     }
 
     System.out.println("Value " + value + " Not found at the list!");
@@ -279,6 +305,10 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
     while (headNode != null) {
       forwardResults.append(headNode.getValue()).append(" -> ");
       headNode = headNode.getNext();
+
+      if (headNode.equals(this.head)) {
+        break;
+      }
     }
 
     System.out.println("Forward traversal: " + forwardResults);
@@ -292,6 +322,10 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
     while (tailNode != null) {
       backwardResults.append(tailNode.getValue()).append(" <- ");
       tailNode = tailNode.getPrevious();
+
+      if (tailNode.equals(this.tail)) {
+        break;
+      }
     }
 
     System.out.println("Backward traversal: " + backwardResults);
@@ -303,12 +337,16 @@ public class DoublyLinkedList extends LinkedListStructure implements LinkedListO
       return 0;
     }
 
-    var currentIndex = 0;
+    var currentIndex = 1;
     var currentNode = this.head;
 
-    while (currentNode != null) {
+    while (!currentNode.getNext().equals(this.head)) {
       currentIndex++;
       currentNode = currentNode.getNext();
+
+      if (currentNode.equals(this.tail)) {
+        break;
+      }
     }
 
     return currentIndex;
