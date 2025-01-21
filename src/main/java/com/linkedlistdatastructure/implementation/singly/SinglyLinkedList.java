@@ -166,6 +166,34 @@ public class SinglyLinkedList extends LinkedListStructure implements LinkedListO
   }
 
   @Override
+  public Node searchByIndex(int index) {
+    var listLength = this.length();
+
+    if (listLength == 0) {
+      System.out.println("Empty list!");
+      return null;
+    }
+
+    if (index < 0 || index >= listLength) {
+      System.out.println("Invalid index !");
+      return null;
+    }
+
+    var currentNode = this.head;
+    var currentIndex = 0;
+
+    while (currentIndex <= index) {
+      if (currentIndex == index) {
+        return currentNode;
+      }
+      currentNode = currentNode.getNext();
+      currentIndex++;
+    }
+
+    return null;
+  }
+
+  @Override
   public void printList() {
     var currentNode = this.head;
 

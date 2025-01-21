@@ -121,8 +121,6 @@ class TestSinglyLinkedList {
     singlyLinkedList.printList();
 
     assertNull(singlyLinkedList.search(4));
-
-
   }
 }
 
