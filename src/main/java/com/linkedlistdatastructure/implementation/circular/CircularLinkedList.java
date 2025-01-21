@@ -250,7 +250,7 @@ public class CircularLinkedList extends LinkedListStructure implements LinkedLis
         return currentNode;
       }
       currentNode = currentNode.getNext();
-      if (currentNode.getNext().equals(this.head)) {
+      if (currentNode.equals(this.head)) {
         break;
       }
     }
